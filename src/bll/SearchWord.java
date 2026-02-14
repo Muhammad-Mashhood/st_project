@@ -22,7 +22,7 @@ public class SearchWord {
 		for (Documents doc : docs) {
 			for (Pages page : doc.getPages()) {
 				String pageContent = page.getPageContent();
-				if (pageContent.contains(keyword)) {
+				if (pageContent.toLowerCase().contains(keyword.toLowerCase())) {
 
 					String[] words = pageContent.split("\\s+");
 

@@ -174,18 +174,15 @@ public class SearchWordTest {
     }
 
     @Test
-    @DisplayName("Boundary: Case-insensitive search - BUG: contains() is case-sensitive")
+    @DisplayName("Boundary: Case-insensitive search - FIXED: contains() now uses toLowerCase()")
     public void testSearchCaseInsensitive() {
-        // BUG FOUND: SearchWord uses pageContent.contains(keyword) which is
-        // case-sensitive,
-        // but then uses equalsIgnoreCase for word matching. This means uppercase
-        // keywords
-        // will fail at the contains() check even though equalsIgnoreCase would match.
-        // This test documents the bug.
+        // FIXED: SearchWord now uses
+        // pageContent.toLowerCase().contains(keyword.toLowerCase())
+        // so uppercase keywords correctly match lowercase content.
         List<String> results = SearchWord.searchKeyword("HELLO", testDocs);
         assertNotNull(results);
-        // Due to the bug, uppercase search returns empty even though "hello" exists
-        assertTrue(results.isEmpty(),
-                "BUG: contains() is case-sensitive, so HELLO doesn't match hello in content");
+        // After fix, uppercase search should find "hello" in content
+        assertFalse(results.isEmpty(),
+                "FIXED: toLowerCase() makes search case-insensitive, HELLO should match hello");
     }
 }

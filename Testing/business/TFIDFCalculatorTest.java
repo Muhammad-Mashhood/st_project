@@ -201,15 +201,15 @@ public class TFIDFCalculatorTest {
     }
 
     @Test
-    @DisplayName("Negative: TF-IDF with English text returns NaN (PreProcessText removes non-Arabic)")
-    public void testTFIDFEnglishTextReturnsNaN() {
-        // BUG/FEATURE: PreProcessText.preprocessText removes ALL non-Arabic characters.
-        // English text becomes empty after preprocessing, causing division by zero →
+    @DisplayName("Negative: TF-IDF with English text returns 0.0 (PreProcessText removes non-Arabic)")
+    public void testTFIDFEnglishTextReturnsZero() {
+        // FIXED: PreProcessText.preprocessText removes ALL non-Arabic characters.
+        // English text becomes empty after preprocessing, now returns 0.0 instead of
         // NaN.
         calculator.addDocumentToCorpus("the cat sat on the mat");
         double score = calculator.calculateDocumentTfIdf("the dog played");
 
-        assertTrue(Double.isNaN(score),
-                "English text should return NaN because PreProcessText removes non-Arabic characters");
+        assertEquals(0.0, score, 0.001,
+                "English text should return 0.0 because PreProcessText removes non-Arabic characters");
     }
 }
