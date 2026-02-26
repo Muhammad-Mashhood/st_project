@@ -62,7 +62,7 @@ public class DatabaseConnectionSingletonTest {
         try {
             java.lang.reflect.Constructor<DatabaseConnection> constructor = DatabaseConnection.class
                     .getDeclaredConstructor();
-            assertFalse(constructor.isAccessible() || constructor.canAccess(null),
+            assertFalse(constructor.isAccessible(),
                     "Constructor should not be publicly accessible");
         } catch (NoSuchMethodException e) {
             fail("DatabaseConnection should have a no-arg constructor (even if private)");
